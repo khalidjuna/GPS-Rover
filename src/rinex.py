@@ -28,7 +28,7 @@ import time
 
 # Cholid
 cred_ta = credentials.Certificate(
-    "/home/ronny/gps-rover/asset/ppls-app-firebase-adminsdk-fbsvc-98186a9afb.json"
+    "/home/ronny/gps-rover/asset/ppls-app.json"
 )
 shift_app = firebase_admin.initialize_app(
     cred_ta,
