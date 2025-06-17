@@ -16,19 +16,19 @@ from tkinter import font
 import time
 
 # Septy
-# cred = credentials.Certificate('/home/ronny/gps-rover/asset/tesis-septy-firebase-adminsdk-fbsvc-450124015e.json')
+# cred = credentials.Certificate('/home/ronny/gps_rover2/gps-rover/asset/tesis-septy-firebase-adminsdk-fbsvc-450124015e.json')
 # firebase_admin.initialize_app(cred, {
 #     'databaseURL': 'https://tesis-septy-default-rtdb.asia-southeast1.firebasedatabase.app/'  # Replace with your database URL
 # })
 # #PPLS
-# cred_ppls = credentials.Certificate('/home/ronny/gps-rover/asset/ppls-shift-firebase-adminsdk-61y26-a26269269d.json')
+# cred_ppls = credentials.Certificate('/home/ronny/gps_rover2/gps-rover/asset/ppls-shift-firebase-adminsdk-61y26-a26269269d.json')
 # ppls_app = firebase_admin.initialize_app(cred_ppls, {
 #     'databaseURL': 'https://ppls-shift-default-rtdb.asia-southeast1.firebasedatabase.app/'  # Replace with your database URL
 # },name="secondary")
 
 # Cholid
 cred_ta = credentials.Certificate(
-    "/home/ronny/gps-rover/asset/ppls-app.json"
+    "/home/ronny/gps_rover2/gps-rover/asset/ppls-app.json"
 )
 shift_app = firebase_admin.initialize_app(
     cred_ta,
@@ -40,10 +40,10 @@ shift_app = firebase_admin.initialize_app(
 # Configuration parameters
 device_port = "/dev/ttyGPS"  # Update this to the correct port for your ZED-F9P
 baud_rate = "115200"  # Default baud rate for ZED-F9P
-output_raw_file = "/home/ronny/gps-rover/output.ubx"  # Temporary raw file
-output_rinex_file = "/home/ronny/gps-rover/output.obs"  # Final RINEX observation file
+output_raw_file = "/home/ronny/gps_rover2/gps-rover/output.ubx"  # Temporary raw file
+output_rinex_file = "/home/ronny/gps_rover2/gps-rover/output.obs"  # Final RINEX observation file
 output_rinex_file_nav = (
-    "/home/ronny/gps-rover/output.nav"  # Final RINEX observation file
+    "/home/ronny/gps_rover2/gps-rover/output.nav"  # Final RINEX observation file
 )
 rtkbin_path = "/path/to/rtklib/bin"  # Path to RTKLIB binaries (update this!)
 tcp_port = 9000
@@ -66,7 +66,7 @@ str2str_command = [
 rtkrcv_command = [
     "rtkrcv",
     "-o",
-    "/home/ronny/gps-rover/ntrip1.conf",  # Path to rtkrcv configuration
+    "/home/ronny/gps_rover2/gps-rover/ntrip1.conf",  # Path to rtkrcv configuration
     "-s",  # Start immediately
 ]
 
@@ -127,7 +127,7 @@ def run_rtkrcv():
         if run_status_rcv == 1:
             time.sleep(5)
             print("Starting RTKRCV...")
-            rtkrcv_command = ["rtkrcv", "-o", "/home/ronny/gps-rover/ntrip1.conf", "-s"]
+            rtkrcv_command = ["rtkrcv", "-o", "/home/ronny/gps_rover2/gps-rover/ntrip1.conf", "-s"]
             try:
                 subprocess.run(rtkrcv_command, check=True, timeout=duration)
                 print(f"RTKRCV collected in file: {output_raw_file}")
@@ -151,13 +151,13 @@ def run_rnx2rtkp():
 
     rtkrcv_command = [
         "rnx2rtkp",
-        "/home/ronny/gps-rover/output1.obs",
-        "/home/ronny/gps-rover/base.obs",
-        "/home/ronny/gps-rover/output1.nav",
+        "/home/ronny/gps_rover2/gps-rover/output1.obs",
+        "/home/ronny/gps_rover2/gps-rover/base.obs",
+        "/home/ronny/gps_rover2/gps-rover/output1.nav",
         "-k",
-        "/home/ronny/gps-rover/post.conf",
+        "/home/ronny/gps_rover2/gps-rover/post.conf",
         "-o",
-        "/home/ronny/gps-rover/solution_post.pos",  # Path to rtkrcv configuration
+        "/home/ronny/gps_rover2/gps-rover/solution_post.pos",  # Path to rtkrcv configuration
     ]
 
     try:
@@ -312,7 +312,7 @@ def download_file_from_dropbox(LOCAL_FILE_PATH, DROPBOX_FILE_PATH, new_access_to
 
 
 def upload_data_post():
-    file_path = "/home/ronny/gps-rover/solution_post.pos"
+    file_path = "/home/ronny/gps_rover2/gps-rover/solution_post.pos"
     a = 6378137.0  # Earth's semi-major axis in meters (WGS84)
     e2 = 0.00669437999014  # Earth's first eccentricity squared (WGS84)
     try:
@@ -392,18 +392,18 @@ def upload_data_post():
 
 def start_rover():
     run_status = 0
-    local_file_path = "/home/ronny/gps-rover/output.obs"
+    local_file_path = "/home/ronny/gps_rover2/gps-rover/output.obs"
     local_file_path_nav = (
-        "/home/ronny/gps-rover/output.nav"  # Path to your local .txt file
+        "/home/ronny/gps_rover2/gps-rover/output.nav"  # Path to your local .txt file
     )
     local_file_path_pos = (
-        "/home/ronny/gps-rover/solution1.pos"  # Path to your local .txt file
+        "/home/ronny/gps_rover2/gps-rover/solution1.pos"  # Path to your local .txt file
     )
     local_file_path_pos_post = (
-        "/home/ronny/gps-rover/solution_post.pos"  # Path to your local .txt file
+        "/home/ronny/gps_rover2/gps-rover/solution_post.pos"  # Path to your local .txt file
     )
     local_file_path_base = (
-        "/home/ronny/gps-rover/base.obs"  # Path to your local .txt file
+        "/home/ronny/gps_rover2/gps-rover/base.obs"  # Path to your local .txt file
     )
     ref_status = db.reference(f"/Realtime/rover/")
     ref = db.reference(f"/Realtime/base/")
@@ -458,24 +458,24 @@ def start_rover():
             convert_to_rinex()
             convert_to_rinex2()
             shutil.copy(
-                "/home/ronny/gps-rover/solution.pos",
-                "/home/ronny/gps-rover/solution1.pos",
+                "/home/ronny/gps_rover2/gps-rover/solution.pos",
+                "/home/ronny/gps_rover2/gps-rover/solution1.pos",
             )
             shutil.copy(
-                "/home/ronny/gps-rover/output.obs", "/home/ronny/gps-rover/output1.obs"
+                "/home/ronny/gps_rover2/gps-rover/output.obs", "/home/ronny/gps_rover2/gps-rover/output1.obs"
             )
             shutil.copy(
-                "/home/ronny/gps-rover/output.nav", "/home/ronny/gps-rover/output1.nav"
+                "/home/ronny/gps_rover2/gps-rover/output.nav", "/home/ronny/gps_rover2/gps-rover/output1.nav"
             )
             shutil.copy(
-                "/home/ronny/gps-rover/solution.pos",
+                "/home/ronny/gps_rover2/gps-rover/solution.pos",
                 f"/home/ronny/gps-record/{filename_pos}",
             )
             shutil.copy(
-                "/home/ronny/gps-rover/output.obs", f"/home/ronny/gps-record/{filename}"
+                "/home/ronny/gps_rover2/gps-rover/output.obs", f"/home/ronny/gps-record/{filename}"
             )
             shutil.copy(
-                "/home/ronny/gps-rover/output.nav",
+                "/home/ronny/gps_rover2/gps-rover/output.nav",
                 f"/home/ronny/gps-record/{filename_nav}",
             )
             data_status = {f"status": "Uploading Result..."}
@@ -570,7 +570,7 @@ def read_last_line(file_path):
 
 
 def start_realtime():
-    file_path = "/home/ronny/gps-rover/solution.pos"
+    file_path = "/home/ronny/gps_rover2/gps-rover/solution.pos"
     a = 6378137.0  # Earth's semi-major axis in meters (WGS84)
     e2 = 0.00669437999014  # Earth's first eccentricity squared (WGS84)
     startup_flag = 0
